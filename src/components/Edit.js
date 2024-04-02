@@ -8,6 +8,12 @@ import { useNavigate } from "react-router-dom";
 function Edit() {
 	// Here usestate has been used in order
 	// to set and get values from the jsx
+	const [picture, setpicture] = useState("");
+	const [phone, setphone] = useState("");
+	const [email, setemail] = useState("");
+	const [city, setcity] = useState("");
+	const [employer, setemployer] = useState("");
+	const [job, setjob] = useState("");
 	const [birthday, setbirthday] = useState("");
 	const [name, setname] = useState("");
 	const [age, setage] = useState("");
@@ -28,7 +34,7 @@ function Edit() {
 	const handelSubmit = (e) => {
 		// Preventing from reload
 		e.preventDefault();
-		if (name == "" || age == "" || birthday == "") {
+		if (name == "" || age == "" || birthday == "" || job == "" || employer == "" || city == "" || email == "" || phone == "" || picture == "") {
 			alert("invalid input");
 			return;
 		}
@@ -42,6 +48,12 @@ function Edit() {
 		a.Name = name;
 		a.Age = age;
 		a.Birthday = birthday;
+		a.Job = job;
+		a.Employer = employer;
+		a.City = city;
+		a.Email = email;
+		a.Phone = phone;
+		a.Picture = picture;
 	
 
 		// Redirecting to main page
@@ -51,6 +63,12 @@ function Edit() {
 	// Useeffect take care that page will
 	// be rendered only once
 	useEffect(() => {
+		setpicture(localStorage.getItem("Picture"));
+		setphone(localStorage.getItem("Phone"));
+		setemail(localStorage.getItem("Email"));
+		setcity(localStorage.getItem("City"));
+		setemployer(localStorage.getItem("Employer"));
+		setjob(localStorage.getItem("Job"));
 		setbirthday(localStorage.getItem("Birthday"));
 		setname(localStorage.getItem("Name"));
 		setage(localStorage.getItem("Age"));
@@ -106,6 +124,97 @@ function Edit() {
 						}
 						type="text"
 						placeholder="Birthday"
+					/>
+				</Form.Group>
+
+				{/* setting job from the input textfiled */}
+				<Form.Group
+					className="mb-3"
+					controlId="formBasicPassword"
+				>
+					<Form.Control
+						value={job}
+						onChange={(e) =>
+							setjob(e.target.value)
+						}
+						type="text"
+						placeholder="Job Title"
+					/>
+				</Form.Group>
+
+
+				{/* setting Employer from the input textfiled */}
+				<Form.Group
+					className="mb-3"
+					controlId="formBasicPassword"
+				>
+					<Form.Control
+						value={employer}
+						onChange={(e) =>
+							setemployer(e.target.value)
+						}
+						type="text"
+						placeholder="Empolyer"
+					/>
+				</Form.Group>
+
+				{/* setting city from the input textfiled */}
+				<Form.Group
+					className="mb-3"
+					controlId="formBasicPassword"
+				>
+					<Form.Control
+						value={city}
+						onChange={(e) =>
+							setcity(e.target.value)
+						}
+						type="text"
+						placeholder="City"
+					/>
+				</Form.Group>
+
+				{/* setting Email from the input textfiled */}
+				<Form.Group
+					className="mb-3"
+					controlId="formBasicPassword"
+				>
+					<Form.Control
+						value={email}
+						onChange={(e) =>
+							setemail(e.target.value)
+						}
+						type="text"
+						placeholder="Email"
+					/>
+				</Form.Group>
+
+				{/* setting phone from the input textfiled */}
+				<Form.Group
+					className="mb-3"
+					controlId="formBasicPassword"
+				>
+					<Form.Control
+						value={phone}
+						onChange={(e) =>
+							setphone(e.target.value)
+						}
+						type="text"
+						placeholder="Phone number"
+					/>
+				</Form.Group>
+
+				{/* setting profile picture from the input textfiled */}
+				<Form.Group
+					className="mb-3"
+					controlId="formBasicPassword"
+				>
+					<Form.Control
+						value={picture}
+						onChange={(e) =>
+							setpicture(e.target.value)
+						}
+						type="text"
+						placeholder="Picture"
 					/>
 				</Form.Group>
 

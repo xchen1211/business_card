@@ -9,17 +9,17 @@ function Home() {
 
 	// You may skip this part if you're
 	// using react-context api or redux
-	function setID(id, name, age, birthday) {
+	function setID(id, name, age, birthday, job, employer, city, email, phone, picture) {
 		localStorage.setItem("id", id);
 		localStorage.setItem("Name", name);
         localStorage.setItem("Age", age);
-        localStorage.setItem("Birthday", birthday);
-        // localStorage.setItem("Job Title", job);
-        // localStorage.setItem("Employer", employer);
-        // localStorage.setItem("City", city);
-        // localStorage.setItem("Email", email);
-        // localStorage.setItem("Phone Number", phone);
-        // localStorage.setItem("Profile Picture", picture);
+		localStorage.setItem("Birthday", birthday);
+		localStorage.setItem("Job", job);
+        localStorage.setItem("Employer", employer);
+        localStorage.setItem("City", city);
+        localStorage.setItem("Email", email);
+        localStorage.setItem("Phone", phone);
+        localStorage.setItem("Picture", picture);
 	}
 
 	// Deleted function - functionality
@@ -47,6 +47,12 @@ function Home() {
 						<th>Name</th>
 						<th>Age</th>
                         <th>Birthday</th>
+						<th>Job</th>
+						<th>Employer</th>
+						<th>City</th>
+						<th>Email</th>
+						<th>Phone Number</th>
+						<th>Profile Picture</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -59,12 +65,12 @@ function Home() {
 								<td>{item.Name}</td>
 								<td>{item.Age}</td>
                                 <td>{item.Birthday}</td>
-                                {/* <td>{item.Job Title}</td>
-                                <td>{item.employer}</td>
-                                <td>{item.city}</td>
-                                <td>{item.email}</td>
-                                <td>{item.phone}</td>
-                                <td>{item.picture}</td> */}
+                                <td>{item.Job}</td>
+                                <td>{item.Employer}</td>
+                                <td>{item.City}</td>
+                                <td>{item.Email}</td>
+                                <td>{item.Phone}</td>
+                                <td>{item.Picture}</td>
 
 								{/* getting theid,name, and 
 									age for storing these
@@ -78,7 +84,14 @@ function Home() {
 													item.id,
 													item.Name,
                                                     item.Age,
-                                                    item.Birthday
+													item.Birthday,
+													item.Job,
+													item.Employer,
+													item.City,
+													item.Email,
+													item.Phone,
+													item.Picture
+											
 												)
 											}
 											variant="info"

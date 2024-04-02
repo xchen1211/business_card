@@ -9,8 +9,17 @@ function Create() {
 	// Making usestate for setting and
 	// fetching a value in jsx
 	const [name, setname] = useState("");
-    const [age, setage] = useState("");
-    const [birthday, setbirthday] = useState("");
+	const [age, setage] = useState("");
+	const [birthday, setbirthday] = useState("");
+	const [job, setjob] = useState("");
+	const [employer, setemployer] = useState("");
+	const [city, setcity] = useState("");
+	const [email, setemail] = useState("");
+	const [phone, setphone] = useState("");
+	const [picture, setpicture] = useState("");
+	
+
+		
 
 	// Using useNavigation for redirecting to pages
 	let history = useNavigate();
@@ -26,12 +35,18 @@ function Create() {
 		// pushing to javascript object
 		let a = name,
             b = age,
-            c = birthday;
-		if (name == "" || age == "" || birthday == "") {
+			c = birthday,
+			d = job,
+			j = employer,
+			f = city,
+			g = email,
+			h = phone,
+			i = picture;
+		if (name == "" || age == "" || birthday == "" || job == "" || employer == "" || city == "" || email == "" || phone == "" || picture == "") {
 			alert("invalid input");
 			return;
 		}
-		array.push({ id: uni, Name: a, Age: b, Birthday: c});
+		array.push({ id: uni, Name: a, Age: b, Birthday: c, Job: d, Employer: j, City: f, Email: g, Phone: h, Picture: i });
 
 		// Redirecting to home page after creation done
 		history("/");
@@ -90,6 +105,104 @@ function Create() {
 						required
 					/>
 				</Form.Group>
+
+				{/* Fetching a value from input textfirld in
+					a setage using usestate*/}
+				<Form.Group
+					className="mb-3"
+					controlId="formBasicAge"
+				>
+					<Form.Control
+						onChange={(e) =>
+							setjob(e.target.value)
+						}
+						type="text"
+						placeholder="Job Title"
+						required
+					/>
+				</Form.Group>
+
+				{/* Fetching a value from input textfirld in
+					a setage using usestate*/}
+				<Form.Group
+					className="mb-3"
+					controlId="formBasicAge"
+				>
+					<Form.Control
+						onChange={(e) =>
+							setemployer(e.target.value)
+						}
+						type="text"
+						placeholder="Employer"
+						required
+					/>
+				</Form.Group>
+
+				{/* Fetching a value from input textfirld in
+					a setage using usestate*/}
+				<Form.Group
+					className="mb-3"
+					controlId="formBasicAge"
+				>
+					<Form.Control
+						onChange={(e) =>
+							setcity(e.target.value)
+						}
+						type="text"
+						placeholder="City"
+						required
+					/>
+				</Form.Group>
+
+				{/* Fetching a value from input textfirld in
+					a setage using usestate*/}
+				<Form.Group
+					className="mb-3"
+					controlId="formBasicAge"
+				>
+					<Form.Control
+						onChange={(e) =>
+							setemail(e.target.value)
+						}
+						type="text"
+						placeholder="Email"
+						required
+					/>
+				</Form.Group>
+
+				{/* Fetching a value from input textfirld in
+					a setage using usestate*/}
+				<Form.Group
+					className="mb-3"
+					controlId="formBasicAge"
+				>
+					<Form.Control
+						onChange={(e) =>
+							setphone(e.target.value)
+						}
+						type="text"
+						placeholder="Phone number"
+						required
+					/>
+				</Form.Group>
+
+				{/* Fetching a value from input textfirld in
+					a setage using usestate*/}
+				<Form.Group
+					className="mb-3"
+					controlId="formBasicAge"
+				>
+					<Form.Control
+						onChange={(e) =>
+							setpicture(e.target.value)
+						}
+						type="text"
+						placeholder="Profile Picture"
+						required
+					/>
+				</Form.Group>
+
+
 
 				{/* handing a onclick event in button for
 					firing a function */}
