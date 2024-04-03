@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button, Table } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import array from "./array";
@@ -6,6 +6,10 @@ import { Link, useNavigate } from "react-router-dom";
 
 function Home() {
 	let history = useNavigate();
+
+	const [data, setData] = useState(array);
+    const [sortField, setSortField] = useState(null);
+    const [sortDirection, setSortDirection] = useState(null);
 
 	// You may skip this part if you're
 	// using react-context api or redux
@@ -32,34 +36,55 @@ function Home() {
 			.indexOf(id);
 
 		// deleting the entry with index
-		array.splice(index, 1);
+		let newArray = [...data];
+		newArray.splice(index, 1);
+		setData(newArray);
 
 		// We need to re-render the page for getting
 		// the results so redirect to same page.
 		history("/");
 	}
 
+	function handleSort(field) {
+        let direction = 'asc';
+        if (sortField === field && sortDirection === 'asc') {
+            direction = 'desc';
+        }
+        setSortField(field);
+        setSortDirection(direction);
+
+        setData([...data].sort((a, b) => {
+            if (a[field] < b[field]) {
+                return direction === 'asc' ? -1 : 1;
+            }
+            if (a[field] > b[field]) {
+                return direction === 'asc' ? 1 : -1;
+            }
+            return 0;
+        }));
+    }
+
 	return (
 		<div style={{ margin: "5rem" }}>
 			<Table striped bordered hover size="sm">
 				<thead>
 					<tr>
-						<th>Name</th>
-						<th>Age</th>
-                        <th>Birthday</th>
-						<th>Job</th>
-						<th>Employer</th>
-						<th>City</th>
-						<th>Email</th>
-						<th>Phone Number</th>
-						<th>Profile Picture</th>
+					<th>Name</th>
+					<th onClick={() => handleSort('Age')}>Age {sortField === 'Age' ? (sortDirection === 'desc' ? '↑' : '↓') : ''}</th>
+					<th>Birthday</th>
+					<th onClick={() => handleSort('Job')}>Job Title {sortField === 'Job' ? (sortDirection === 'desc' ? '↑' : '↓') : ''}</th>
+					<th onClick={() => handleSort('Employer')}>Employer  {sortField === 'Employer' ? (sortDirection === 'desc' ? '↑' : '↓') : ''}</th>
+					<th onClick={() => handleSort('City')}>City  {sortField === 'City' ? (sortDirection === 'desc' ? '↑' : '↓') : ''}</th>
+					<th>Email</th>
+					<th>Phone Number</th>
+					<th>Profile Picture</th>
 					</tr>
 				</thead>
 				<tbody>
 					{/* Mapping though every element 
-						in the array and showing the 
+						data 
 						data in the form of table */}
-					{array.map((item) => {
+					{data.map((item) => {
 						return (
 							<tr>
 								<td>{item.Name}</td>
@@ -72,7 +97,7 @@ function Home() {
                                 <td>{item.Phone}</td>
                                 <td>{item.Picture}</td>
 
-								{/* getting theid,name, and 
+								{/* getting the id, name, and 
 									age for storing these
 									value in the jsx with 
 									onclick event */}
