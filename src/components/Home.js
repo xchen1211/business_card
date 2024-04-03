@@ -65,7 +65,9 @@ function Home() {
     }
 
 	return (
-		<div style={{ margin: "5rem" }}>
+		<div style={{ margin: "1rem" }}>
+		<h1 style={{ marginTop: '25px' }} className="headline">All Users' Profiles </h1>
+		<h3>Click on the header of Age, Job Title, Employer, or City to sort </h3>
 			<Table striped bordered hover size="sm">
 				<thead>
 					<tr>
@@ -95,7 +97,10 @@ function Home() {
                                 <td>{item.City}</td>
                                 <td>{item.Email}</td>
                                 <td>{item.Phone}</td>
-                                <td>{item.Picture}</td>
+								<td>
+								{item.Picture && 
+									(<img src={item.Picture} alt="Item Picture" width={120} height={120} />)}
+								</td>
 
 								{/* getting the id, name, and 
 									age for storing these

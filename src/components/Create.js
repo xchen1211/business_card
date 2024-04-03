@@ -17,9 +17,12 @@ function Create() {
 	const [email, setemail] = useState("");
 	const [phone, setphone] = useState("");
 	const [picture, setpicture] = useState("");
-	
 
-		
+	// upload image function
+	function uploadimage(e) {
+        console.log(e.target.files);
+        setpicture(URL.createObjectURL(e.target.files[0]));
+    }
 
 	// Using useNavigation for redirecting to pages
 	let history = useNavigate();
@@ -42,7 +45,7 @@ function Create() {
 			g = email,
 			h = phone,
 			i = picture;
-		if (name == "" || age == "" || birthday == "" || job == "" || employer == "" || city == "" || email == "" || phone == "" || picture == "") {
+		if (name == "" || age == "" || birthday == "" || job == "" || employer == "" || city == "" || email == "" || phone == "" ) {
 			alert("invalid input");
 			return;
 		}
@@ -188,19 +191,17 @@ function Create() {
 
 				{/* Fetching a value from input textfirld in
 					a setage using usestate*/}
-				<Form.Group
+				{/* <Form.Group
 					className="mb-3"
 					controlId="formBasicAge"
-				>
-					<Form.Control
-						onChange={(e) =>
-							setpicture(e.target.value)
-						}
-						type="text"
-						placeholder="Profile Picture"
-						required
-					/>
-				</Form.Group>
+				> */}
+				<div>
+					<h2>Upload Profile Picture:</h2>
+					<input type="file" onChange={uploadimage} />
+					{/* width={"250px"} height={"250px"} */}
+					{picture && (<img src={picture} width={180} height={180} />)}
+				</div>
+				{/* </Form.Group> */}
 
 
 

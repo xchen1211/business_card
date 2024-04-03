@@ -28,6 +28,12 @@ function Edit() {
 			return e.id;
 		})
 		.indexOf(id);
+	
+	// upload image function
+	function uploadimage(e) {
+        console.log(e.target.files);
+        setpicture(URL.createObjectURL(e.target.files[0]));
+    }
 
 	// Function for handling the edit and
 	// pushing changes of editing/updating
@@ -204,19 +210,17 @@ function Edit() {
 				</Form.Group>
 
 				{/* setting profile picture from the input textfiled */}
-				<Form.Group
+				{/* <Form.Group
 					className="mb-3"
 					controlId="formBasicPassword"
-				>
-					<Form.Control
-						value={picture}
-						onChange={(e) =>
-							setpicture(e.target.value)
-						}
-						type="text"
-						placeholder="Picture"
-					/>
-				</Form.Group>
+				> */}
+					<div>
+					<h2>Upload Profile Picture:</h2>
+					<input type="file" onChange={uploadimage} />
+					{/* width={"250px"} height={"250px"} */}
+					{picture && (<img src={picture} width={120} height={120} />)}
+				</div>
+				{/* </Form.Group> */}
 
 				{/* Hadinling an onclick event 
 					running an edit logic */}
