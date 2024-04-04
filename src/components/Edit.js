@@ -41,7 +41,7 @@ function Edit() {
 	const handelSubmit = async (e) => {
 		// Preventing from reload
 		e.preventDefault();
-		if (name == "" || age == "" || birthday == "" || job == "" || employer == "" || city == "" || email == "" || phone == "" || picture == "") {
+		if (name == "" || age == "" || birthday == "" || job == "" || employer == "" || city == "" || email == "" || phone == "") {
 			alert("invalid input");
 			return;
 		}
@@ -52,15 +52,15 @@ function Edit() {
 		// Putting the value from the input
 		// textfield and replacing it from
 		// existing for updation
-		a.Name = name;
-		a.Age = age;
-		a.Birthday = birthday;
-		a.Job = job;
-		a.Employer = employer;
-		a.City = city;
-		a.Email = email;
-		a.Phone = phone;
-		a.Picture = picture;
+		a.name = name;
+		a.age = age;
+		a.birthday = birthday;
+		a.job = job;
+		a.employer = employer;
+		a.city = city;
+		a.email = email;
+		a.phone = phone;
+		a.picture = picture;
 
 		// Form a payload with the data
         const payload = {
@@ -83,8 +83,6 @@ function Edit() {
             console.log(response.data); // Handle the response as needed
             // // Reset the form fields after successful submission
             // setname("");
-            // setage("");
-            // Reset other form fields as needed...
         } catch (error) {
             console.error('Error submitting form:', error);
             // Handle errors as needed
@@ -98,17 +96,19 @@ function Edit() {
 	// Useeffect take care that page will
 	// be rendered only once
 	useEffect(() => {
-		setpicture(localStorage.getItem("Picture"));
-		setphone(localStorage.getItem("Phone"));
-		setemail(localStorage.getItem("Email"));
-		setcity(localStorage.getItem("City"));
-		setemployer(localStorage.getItem("Employer"));
-		setjob(localStorage.getItem("Job"));
-		setbirthday(localStorage.getItem("Birthday"));
-		setname(localStorage.getItem("Name"));
-		setage(localStorage.getItem("Age"));
+		setpicture(localStorage.getItem("picture"));
+		setphone(localStorage.getItem("phone"));
+		setemail(localStorage.getItem("email"));
+		setcity(localStorage.getItem("city"));
+		setemployer(localStorage.getItem("employer"));
+		setjob(localStorage.getItem("job"));
+		setbirthday(localStorage.getItem("birthday"));
+		setname(localStorage.getItem("name"));
+		setage(localStorage.getItem("age"));
 		setid(localStorage.getItem("id"));
 	}, []);
+
+	// data = data.flatMap(e => e)
 
 	return (
 		<div>

@@ -51,7 +51,7 @@ function Create() {
 			alert("invalid input");
 			return;
 		}
-		array.push({ id: uni, Name: a, Age: b, Birthday: c, Job: d, Employer: j, City: f, Email: g, Phone: h, Picture: i });
+		array.push({ id: uni, name: a, age: b, birthday: c, job: d, employer: j, city: f, email: g, phone: h, picture: i });
 
 		// Form a payload with the data
         const payload = {

@@ -30,15 +30,15 @@ function Home() {
 	// using react-context api or redux
 	function setID(id, name, age, birthday, job, employer, city, email, phone, picture) {
 		localStorage.setItem("id", id);
-		localStorage.setItem("Name", name);
-        localStorage.setItem("Age", age);
-		localStorage.setItem("Birthday", birthday);
-		localStorage.setItem("Job", job);
-        localStorage.setItem("Employer", employer);
-        localStorage.setItem("City", city);
-        localStorage.setItem("Email", email);
-        localStorage.setItem("Phone", phone);
-        localStorage.setItem("Picture", picture);
+		localStorage.setItem("name", name);
+        localStorage.setItem("age", age);
+		localStorage.setItem("birthday", birthday);
+		localStorage.setItem("job", job);
+        localStorage.setItem("employer", employer);
+        localStorage.setItem("city", city);
+        localStorage.setItem("email", email);
+        localStorage.setItem("phone", phone);
+        localStorage.setItem("picture", picture);
 	}
 
 	// Deleted function - functionality
@@ -77,7 +77,7 @@ function Home() {
         setSortField(field);
 		setSortDirection(direction);
 		
-		field = field.toLowerCase();
+		// field = field.toLowerCase();
 
         setData([...data].sort((a, b) => {
             if (a[field] < b[field]) {
@@ -106,11 +106,11 @@ function Home() {
 				<thead>
 					<tr>
 					<th>Name</th>
-					<th onClick={() => handleSort('Age')}>Age {sortField === 'Age' ? (sortDirection === 'desc' ? '↑' : '↓') : ''}</th>
+					<th onClick={() => handleSort('age')}>Age {sortField === 'age' ? (sortDirection === 'desc' ? '↑' : '↓') : ''}</th>
 					<th>Birthday</th>
-					<th onClick={() => handleSort('Job')}>Job Title {sortField === 'Job' ? (sortDirection === 'desc' ? '↑' : '↓') : ''}</th>
-					<th onClick={() => handleSort('Employer')}>Employer  {sortField === 'Employer' ? (sortDirection === 'desc' ? '↑' : '↓') : ''}</th>
-					<th onClick={() => handleSort('City')}>City  {sortField === 'City' ? (sortDirection === 'desc' ? '↑' : '↓') : ''}</th>
+					<th onClick={() => handleSort('job')}>Job Title {sortField === 'job' ? (sortDirection === 'desc' ? '↑' : '↓') : ''}</th>
+					<th onClick={() => handleSort('employer')}>Employer  {sortField === 'employer' ? (sortDirection === 'desc' ? '↑' : '↓') : ''}</th>
+					<th onClick={() => handleSort('city')}>City  {sortField === 'city' ? (sortDirection === 'desc' ? '↑' : '↓') : ''}</th>
 					<th>Email</th>
 					<th>Phone Number</th>
 					<th>Profile Picture</th>
@@ -146,15 +146,15 @@ function Home() {
 											onClick={(e) =>
 												setID(
 													item.id,
-													item.Name,
-                                                    item.Age,
-													item.Birthday,
-													item.Job,
-													item.Employer,
-													item.City,
-													item.Email,
-													item.Phone,
-													item.Picture
+													item.name,
+                                                    item.age,
+													item.birthday,
+													item.job,
+													item.employer,
+													item.city,
+													item.email,
+													item.phone,
+													item.picture
 											
 												)
 											}
@@ -170,7 +170,7 @@ function Home() {
 								<td>
 									<Button
 										onClick={(e) =>
-											deleted(item[0].id)
+											deleted(item.id)
 										}
 										variant="danger"
 									>
