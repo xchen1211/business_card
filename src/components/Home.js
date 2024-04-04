@@ -1,15 +1,30 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Table } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import array from "./array";
 import { Link, useNavigate } from "react-router-dom";
+import axios from 'axios';
+
 
 function Home() {
 	let history = useNavigate();
 
-	const [data, setData] = useState(array);
+	let [data, setData] = useState([]);
     const [sortField, setSortField] = useState(null);
-    const [sortDirection, setSortDirection] = useState(null);
+	const [sortDirection, setSortDirection] = useState(null);
+	
+
+	// Function to fetch data from Lambda function
+    async function fetchData() {
+        try {
+            const response = await axios.get('https://ozb6kyfiy4.execute-api.us-east-2.amazonaws.com/items');
+			setData(response.data); // Set the fetched data to state
+			console.log(response.data)
+        } catch (error) {
+            console.error('Error fetching data:', error);
+            // Handle errors as needed
+		}
+	}
 
 	// You may skip this part if you're
 	// using react-context api or redux
@@ -28,8 +43,8 @@ function Home() {
 
 	// Deleted function - functionality
 	// for deleting the entry
-	function deleted(id) {
-		let index = array
+	async function deleted(id) { 
+		let index =  array
 			.map(function (e) {
 				return e.id;
 			})
@@ -39,6 +54,15 @@ function Home() {
 		let newArray = [...data];
 		newArray.splice(index, 1);
 		setData(newArray);
+
+        try {
+            // Make a PUT request to your Lambda function
+            const response = await axios.delete('https://ozb6kyfiy4.execute-api.us-east-2.amazonaws.com/items/'+id);
+            // console.log(response.data); // Handle the response as needed
+        } catch (error) {
+            console.error('Error submitting form:', error);
+            // Handle errors as needed
+        }
 
 		// We need to re-render the page for getting
 		// the results so redirect to same page.
@@ -51,7 +75,9 @@ function Home() {
             direction = 'desc';
         }
         setSortField(field);
-        setSortDirection(direction);
+		setSortDirection(direction);
+		
+		field = field.toLowerCase();
 
         setData([...data].sort((a, b) => {
             if (a[field] < b[field]) {
@@ -62,7 +88,15 @@ function Home() {
             }
             return 0;
         }));
-    }
+	}
+	
+	 // Fetch data on component mount
+	useEffect(() => {
+    	fetchData();
+	}, []);
+
+	data = data.flatMap(e => e)
+	// console.log(data)
 
 	return (
 		<div style={{ margin: "1rem" }}>
@@ -88,18 +122,18 @@ function Home() {
 						data in the form of table */}
 					{data.map((item) => {
 						return (
-							<tr>
-								<td>{item.Name}</td>
-								<td>{item.Age}</td>
-                                <td>{item.Birthday}</td>
-                                <td>{item.Job}</td>
-                                <td>{item.Employer}</td>
-                                <td>{item.City}</td>
-                                <td>{item.Email}</td>
-                                <td>{item.Phone}</td>
+							<tr key={item.id}>
+								<td>{item.name}</td>
+								<td>{item.age}</td>
+                                <td>{item.birthday}</td>
+                                <td>{item.job}</td>
+                                <td>{item.employer}</td>
+                                <td>{item.city}</td>
+                                <td>{item.email}</td>
+                                <td>{item.phone}</td>
 								<td>
-								{item.Picture && 
-									(<img src={item.Picture} alt="Item Picture" width={120} height={120} />)}
+								{item.picture && 
+									(<img src={item.picture} alt="Item Picture" width={120} height={120} />)}
 								</td>
 
 								{/* getting the id, name, and 
@@ -136,7 +170,7 @@ function Home() {
 								<td>
 									<Button
 										onClick={(e) =>
-											deleted(item.id)
+											deleted(item[0].id)
 										}
 										variant="danger"
 									>

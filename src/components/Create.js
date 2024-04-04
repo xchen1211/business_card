@@ -4,6 +4,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import array from "./array";
 import { v4 as uuid } from "uuid";
 import { Link, useNavigate } from "react-router-dom";
+import axios from 'axios';
+
 
 function Create() {
 	// Making usestate for setting and
@@ -28,7 +30,7 @@ function Create() {
 	let history = useNavigate();
 
 	// Function for creating a post/entry
-	const handelSubmit = (e) => {
+	const handelSubmit = async (e) => {
 		e.preventDefault(); // Prevent reload
 
 		const ids = uuid(); // Creating unique id
@@ -50,6 +52,32 @@ function Create() {
 			return;
 		}
 		array.push({ id: uni, Name: a, Age: b, Birthday: c, Job: d, Employer: j, City: f, Email: g, Phone: h, Picture: i });
+
+		// Form a payload with the data
+        const payload = {
+			'id': uni,
+            'name': name,
+			'age': age,
+			'birthday': birthday,
+			'job': job,
+			'employer': employer,
+			'city': city,
+			'email': email,
+			'phone': phone,
+			'picture': picture,
+        };
+
+        try {
+            // Make a PUT request to your Lambda function
+            const response = await axios.put('https://ozb6kyfiy4.execute-api.us-east-2.amazonaws.com/items', payload);
+			// const response = await axios.get('https://ozb6kyfiy4.execute-api.us-east-2.amazonaws.com/items');
+            console.log(response.data); // Handle the response as needed
+            // // Reset the form fields after successful submission
+            // setname("");
+        } catch (error) {
+            console.error('Error submitting form:', error);
+            // Handle errors as needed
+        }
 
 		// Redirecting to home page after creation done
 		history("/");
@@ -199,7 +227,7 @@ function Create() {
 					<h2>Upload Profile Picture:</h2>
 					<input type="file" onChange={uploadimage} />
 					{/* width={"250px"} height={"250px"} */}
-					{picture && (<img src={picture} width={180} height={180} />)}
+					{picture && (<img src={picture} width={120} height={120} />)}
 				</div>
 				{/* </Form.Group> */}
 

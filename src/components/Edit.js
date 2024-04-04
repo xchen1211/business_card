@@ -4,6 +4,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import array from "./array";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import axios from 'axios';
 
 function Edit() {
 	// Here usestate has been used in order
@@ -37,7 +38,7 @@ function Edit() {
 
 	// Function for handling the edit and
 	// pushing changes of editing/updating
-	const handelSubmit = (e) => {
+	const handelSubmit = async (e) => {
 		// Preventing from reload
 		e.preventDefault();
 		if (name == "" || age == "" || birthday == "" || job == "" || employer == "" || city == "" || email == "" || phone == "" || picture == "") {
@@ -60,6 +61,34 @@ function Edit() {
 		a.Email = email;
 		a.Phone = phone;
 		a.Picture = picture;
+
+		// Form a payload with the data
+        const payload = {
+			'id': id,
+            'name': name,
+			'age': age,
+			'birthday': birthday,
+			'job': job,
+			'employer': employer,
+			'city': city,
+			'email': email,
+			'phone': phone,
+			'picture': picture,
+        };
+
+        try {
+            // Make a PUT request to your Lambda function
+            const response = await axios.put('https://ozb6kyfiy4.execute-api.us-east-2.amazonaws.com/items', payload);
+			// const response = await axios.get('https://ozb6kyfiy4.execute-api.us-east-2.amazonaws.com/items');
+            console.log(response.data); // Handle the response as needed
+            // // Reset the form fields after successful submission
+            // setname("");
+            // setage("");
+            // Reset other form fields as needed...
+        } catch (error) {
+            console.error('Error submitting form:', error);
+            // Handle errors as needed
+        }
 	
 
 		// Redirecting to main page
