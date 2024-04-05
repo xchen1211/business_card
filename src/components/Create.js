@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
-import array from "./array";
 import { v4 as uuid } from "uuid";
 import { Link, useNavigate } from "react-router-dom";
 import axios from 'axios';
@@ -36,22 +35,10 @@ function Create() {
 		const ids = uuid(); // Creating unique id
 		let uni = ids.slice(0, 8); // Slicing unique id
 
-		// Fetching a value from usestate and
-		// pushing to javascript object
-		let a = name,
-            b = age,
-			c = birthday,
-			d = job,
-			j = employer,
-			f = city,
-			g = email,
-			h = phone,
-			i = picture;
 		if (name == "" || age == "" || birthday == "" || job == "" || employer == "" || city == "" || email == "" || phone == "" ) {
 			alert("invalid input");
 			return;
 		}
-		array.push({ id: uni, name: a, age: b, birthday: c, job: d, employer: j, city: f, email: g, phone: h, picture: i });
 
 		// Form a payload with the data
         const payload = {

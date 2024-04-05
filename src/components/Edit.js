@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
-import array from "./array";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
@@ -22,13 +21,6 @@ function Edit() {
 
 	// Used for navigation with logic in javascript
 	let history = useNavigate();
-
-	// Getting an index of an entry with an id
-	let index = array
-		.map(function (e) {
-			return e.id;
-		})
-		.indexOf(id);
 	
 	// upload image function
 	function uploadimage(e) {
@@ -46,21 +38,6 @@ function Edit() {
 			return;
 		}
 
-		// Getting an index of an array
-		let a = array[index];
-
-		// Putting the value from the input
-		// textfield and replacing it from
-		// existing for updation
-		a.name = name;
-		a.age = age;
-		a.birthday = birthday;
-		a.job = job;
-		a.employer = employer;
-		a.city = city;
-		a.email = email;
-		a.phone = phone;
-		a.picture = picture;
 
 		// Form a payload with the data
         const payload = {
@@ -251,8 +228,7 @@ function Edit() {
 				</div>
 				{/* </Form.Group> */}
 
-				{/* Hadinling an onclick event 
-					running an edit logic */}
+				{/* Handling an onclick event running an edit logic */}
 				<Button
 					onClick={(e) => handelSubmit(e)}
 					variant="primary"

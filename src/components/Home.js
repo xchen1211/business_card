@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Button, Table } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
-import array from "./array";
 import { Link, useNavigate } from "react-router-dom";
 import axios from 'axios';
 
@@ -44,16 +43,16 @@ function Home() {
 	// Deleted function - functionality
 	// for deleting the entry
 	async function deleted(id) { 
-		let index =  array
+		let index = data
 			.map(function (e) {
 				return e.id;
 			})
 			.indexOf(id);
 
 		// deleting the entry with index
-		let newArray = [...data];
-		newArray.splice(index, 1);
-		setData(newArray);
+		let newData = [...data];
+		newData.splice(index, 1);
+		setData(newData);
 
         try {
             // Make a PUT request to your Lambda function
