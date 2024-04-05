@@ -54,6 +54,8 @@ function Edit() {
         };
 
         try {
+			console.log('picture');
+			console.log(picture);
             // Make a PUT request to your Lambda function
             const response = await axios.put('https://ozb6kyfiy4.execute-api.us-east-2.amazonaws.com/items', payload);
 			// const response = await axios.get('https://ozb6kyfiy4.execute-api.us-east-2.amazonaws.com/items');

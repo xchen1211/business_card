@@ -4,6 +4,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { v4 as uuid } from "uuid";
 import { Link, useNavigate } from "react-router-dom";
 import axios from 'axios';
+import AWS from 'aws-sdk';
 
 
 function Create() {
@@ -18,18 +19,21 @@ function Create() {
 	const [email, setemail] = useState("");
 	const [phone, setphone] = useState("");
 	const [picture, setpicture] = useState("");
+	const [picturePath, setpicturePath] = useState("");
 
 	// upload image function
 	function uploadimage(e) {
-        console.log(e.target.files);
-        setpicture(URL.createObjectURL(e.target.files[0]));
+		const file = e.target.files[0];
+        console.log(file);
+		setpicture(URL.createObjectURL(file));
+		setpicturePath(file);
     }
 
 	// Using useNavigation for redirecting to pages
 	let history = useNavigate();
 
 	// Function for creating a post/entry
-	const handelSubmit = async (e) => {
+	const handleSubmit = async (e) => {
 		e.preventDefault(); // Prevent reload
 
 		const ids = uuid(); // Creating unique id
@@ -39,6 +43,8 @@ function Create() {
 			alert("invalid input");
 			return;
 		}
+
+		const pictureS3Key = uni + "_" + picturePath.name;
 
 		// Form a payload with the data
         const payload = {
@@ -51,10 +57,12 @@ function Create() {
 			'city': city,
 			'email': email,
 			'phone': phone,
-			'picture': picture,
+			'picture': pictureS3Key,
         };
 
         try {
+			console.log('pictureS3Key');
+			console.log(pictureS3Key);
             // Make a PUT request to your Lambda function
             const response = await axios.put('https://ozb6kyfiy4.execute-api.us-east-2.amazonaws.com/items', payload);
 			// const response = await axios.get('https://ozb6kyfiy4.execute-api.us-east-2.amazonaws.com/items');
@@ -64,11 +72,49 @@ function Create() {
         } catch (error) {
             console.error('Error submitting form:', error);
             // Handle errors as needed
-        }
+		}
+		
+		
+		const S3_BUCKET = "business.picture";
+		const REGION = "us-east-2";
+		
+		//TODO: save to another place
+		AWS.config.update({
+			accessKeyId: "AKIATCKAOO5F4YUF4ITX",
+			secretAccessKey: "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",
+		});
+		const s3 = new AWS.S3({
+			params: { Bucket: S3_BUCKET },
+			region: REGION,
+		});
+
+		const params = {
+			Bucket: S3_BUCKET,
+			Key: pictureS3Key,
+			Body: picturePath,
+		};
+	
+		var upload = s3
+			.putObject(params)
+			.on("httpUploadProgress", (e) => {
+			console.log(
+				"Uploading " + parseInt((e.loaded * 100) / e.total) + "%"
+			);
+		})
+			.promise();
+	
+		await upload.then((err, d) => {
+			console.log(err);
+			alert("File uploaded successfully.");
+		});
+		
 
 		// Redirecting to home page after creation done
 		history("/");
 	};
+
+
+
 
 	return (
 		<div>
@@ -223,7 +269,7 @@ function Create() {
 				{/* handing a onclick event in button for
 					firing a function */}
 				<Button
-					onClick={(e) => handelSubmit(e)}
+					onClick={(e) => handleSubmit(e)}
 					variant="primary"
 					type="submit"
 				>
