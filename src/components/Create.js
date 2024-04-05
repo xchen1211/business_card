@@ -39,7 +39,7 @@ function Create() {
 		const ids = uuid(); // Creating unique id
 		let uni = ids.slice(0, 8); // Slicing unique id
 
-		if (name == "" || age == "" || birthday == "" || job == "" || employer == "" || city == "" || email == "" || phone == "" ) {
+		if (name == "" || age == "" || birthday == "" || job == "" || employer == "" || city == "" || email == "" || phone == "" || picture == "" ) {
 			alert("invalid input");
 			return;
 		}
@@ -65,10 +65,7 @@ function Create() {
 			console.log(pictureS3Key);
             // Make a PUT request to your Lambda function
             const response = await axios.put('https://ozb6kyfiy4.execute-api.us-east-2.amazonaws.com/items', payload);
-			// const response = await axios.get('https://ozb6kyfiy4.execute-api.us-east-2.amazonaws.com/items');
             console.log(response.data); // Handle the response as needed
-            // // Reset the form fields after successful submission
-            // setname("");
         } catch (error) {
             console.error('Error submitting form:', error);
             // Handle errors as needed

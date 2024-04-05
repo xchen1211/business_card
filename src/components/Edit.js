@@ -4,6 +4,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
+import AWS from 'aws-sdk';
+import { v4 as uuid } from "uuid";
 
 function Edit() {
 	// Here usestate has been used in order
@@ -18,14 +20,17 @@ function Edit() {
 	const [name, setname] = useState("");
 	const [age, setage] = useState("");
 	const [id, setid] = useState("");
+	const [picturePath, setpicturePath] = useState("");
 
 	// Used for navigation with logic in javascript
 	let history = useNavigate();
 	
 	// upload image function
 	function uploadimage(e) {
-        console.log(e.target.files);
-        setpicture(URL.createObjectURL(e.target.files[0]));
+		const file = e.target.files[0];
+        console.log(file);
+		setpicture(URL.createObjectURL(file));
+		setpicturePath(file);
     }
 
 	// Function for handling the edit and
@@ -33,11 +38,14 @@ function Edit() {
 	const handelSubmit = async (e) => {
 		// Preventing from reload
 		e.preventDefault();
-		if (name == "" || age == "" || birthday == "" || job == "" || employer == "" || city == "" || email == "" || phone == "") {
+		if (name == "" || age == "" || birthday == "" || job == "" || employer == "" || city == "" || email == "" || phone == "" || picture == "") {
 			alert("invalid input");
 			return;
 		}
+		const ids = uuid(); // Creating unique id
+		let uni = ids.slice(0, 8); // Slicing unique id
 
+		const pictureS3Key = uni + "_" + picturePath.name;
 
 		// Form a payload with the data
         const payload = {
@@ -50,22 +58,53 @@ function Edit() {
 			'city': city,
 			'email': email,
 			'phone': phone,
-			'picture': picture,
+			'picture': pictureS3Key,
         };
 
         try {
-			console.log('picture');
-			console.log(picture);
+			console.log('pictureS3Key');
+			console.log(pictureS3Key);
             // Make a PUT request to your Lambda function
             const response = await axios.put('https://ozb6kyfiy4.execute-api.us-east-2.amazonaws.com/items', payload);
-			// const response = await axios.get('https://ozb6kyfiy4.execute-api.us-east-2.amazonaws.com/items');
             console.log(response.data); // Handle the response as needed
-            // // Reset the form fields after successful submission
-            // setname("");
         } catch (error) {
             console.error('Error submitting form:', error);
             // Handle errors as needed
-        }
+		}
+		
+		const S3_BUCKET = "business.picture";
+		const REGION = "us-east-2";
+		
+		//TODO: save to another place
+		AWS.config.update({
+			accessKeyId: "AKIATCKAOO5F4YUF4ITX",
+			secretAccessKey: "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",
+		});
+		const s3 = new AWS.S3({
+			params: { Bucket: S3_BUCKET },
+			region: REGION,
+		});
+
+		const params = {
+			Bucket: S3_BUCKET,
+			Key: pictureS3Key,
+			Body: picturePath,
+		};
+	
+		var upload = s3
+			.putObject(params)
+			.on("httpUploadProgress", (e) => {
+			console.log(
+				"Uploading " + parseInt((e.loaded * 100) / e.total) + "%"
+			);
+		})
+			.promise();
+	
+		await upload.then((err, d) => {
+			console.log(err);
+			alert("File uploaded successfully.");
+		});
+		
 	
 
 		// Redirecting to main page
