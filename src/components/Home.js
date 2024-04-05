@@ -68,6 +68,10 @@ function Home() {
 		history("/");
 	}
 
+	function isNumeric(value) {
+		return /^-?\d+$/.test(value);
+	}
+
 	function handleSort(field) {
         let direction = 'asc';
         if (sortField === field && sortDirection === 'asc') {
@@ -79,13 +83,17 @@ function Home() {
 		// field = field.toLowerCase();
 
         setData([...data].sort((a, b) => {
-            if (a[field] < b[field]) {
-                return direction === 'asc' ? -1 : 1;
-            }
-            if (a[field] > b[field]) {
-                return direction === 'asc' ? 1 : -1;
-            }
-            return 0;
+            // Compare the values of the specified field
+			const valueA = a[field];
+			const valueB = b[field];
+
+			// Handle sorting for strings or numbers
+			if (!(isNumeric(valueA) && isNumeric(valueB))) {
+				return direction === 'asc' ? valueA.localeCompare(valueB) : valueB.localeCompare(valueA);
+			} else {
+				console.log('int sort')
+				return direction === 'asc' ? valueA - valueB : valueB - valueA;
+			}
         }));
 	}
 	
