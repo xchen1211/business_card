@@ -4,8 +4,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Link, useNavigate } from "react-router-dom";
 import axios from 'axios';
 
-
-function Home() {
+function Home({user}) {
 	let history = useNavigate();
 
 	let [data, setData] = useState([]);
@@ -108,6 +107,7 @@ function Home() {
 	return (
 		<div style={{ margin: "1rem" }}>
 		<h1 style={{ marginTop: '25px' }} className="headline">All Users' Profiles </h1>
+		{/* <h1>Hello {user.username}</h1> */}
 		<h3>Click on the header of Age, Job Title, Employer, or City to sort </h3>
 			<Table striped bordered hover size="sm">
 				<thead>
