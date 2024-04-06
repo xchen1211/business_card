@@ -16,7 +16,7 @@ function Home({user}) {
     async function fetchData() {
         try {
 			let response;
-			if (user.username == "61cb5560-a061-7010-fbb4-0a572b200dfc"){
+			if (user.username === "61cb5560-a061-7010-fbb4-0a572b200dfc"){
 				response = await axios.get('https://ozb6kyfiy4.execute-api.us-east-2.amazonaws.com/items');
 			} else {
             	response = await axios.get('https://ozb6kyfiy4.execute-api.us-east-2.amazonaws.com/items/' + user.username);
@@ -109,23 +109,57 @@ function Home({user}) {
 	data = data.flatMap(e => e)
 	// console.log(data)
 
+	// Check if the database already has data with id === user.username
+    const hasDataWithUserId = data.some(item => item.id === user.username);
+
 	return (
 		<div style={{ margin: "1rem" }}>
-		<h1 style={{ marginTop: '25px' }} className="headline">All Users' Profiles </h1>
-		{/* <h1>Hello {user.username}</h1> */}
-		<h3>Click on the header of Age, Job Title, Employer, or City to sort </h3>
+		{user.username === "61cb5560-a061-7010-fbb4-0a572b200dfc" && (
+                <div>
+                    <h1 style={{ marginTop: '25px' }} className="headline">All Users' Profiles </h1>
+                    <h3>Click on the header of Age, Job Title, Employer, or City to sort </h3>
+                </div>
+			)}
+		
+		{user.username !== "61cb5560-a061-7010-fbb4-0a572b200dfc" && (
+                <div>
+                    <h1 style={{ marginTop: '25px' }} className="headline">My Profile </h1>
+                </div>
+            )}
+		
 			<Table striped bordered hover size="sm">
 				<thead>
 					<tr>
 					<th>Name</th>
-					<th onClick={() => handleSort('age')}>Age {sortField === 'age' ? (sortDirection === 'desc' ? '↑' : '↓') : ''}</th>
-					<th>Birthday</th>
-					<th onClick={() => handleSort('job')}>Job Title {sortField === 'job' ? (sortDirection === 'desc' ? '↑' : '↓') : ''}</th>
-					<th onClick={() => handleSort('employer')}>Employer  {sortField === 'employer' ? (sortDirection === 'desc' ? '↑' : '↓') : ''}</th>
-					<th onClick={() => handleSort('city')}>City  {sortField === 'city' ? (sortDirection === 'desc' ? '↑' : '↓') : ''}</th>
-					<th>Email</th>
-					<th>Phone Number</th>
-					<th>Profile Picture</th>
+					{user.username === "61cb5560-a061-7010-fbb4-0a572b200dfc" && (
+                        <th onClick={() => handleSort('age')}>Age {sortField === 'age' ? (sortDirection === 'desc' ? '↑' : '↓') : ''}</th>
+					)}
+					{user.username !== "61cb5560-a061-7010-fbb4-0a572b200dfc" && (
+                        <th>Age</th>
+                    )}
+                    <th>Birthday</th>
+                    {user.username === "61cb5560-a061-7010-fbb4-0a572b200dfc" && (
+                        <th onClick={() => handleSort('job')}>Job Title {sortField === 'job' ? (sortDirection === 'desc' ? '↑' : '↓') : ''}</th>
+					)}
+					{user.username !== "61cb5560-a061-7010-fbb4-0a572b200dfc" && (
+                        <th>Job Title</th>
+                    )}
+                    {user.username === "61cb5560-a061-7010-fbb4-0a572b200dfc" && (
+                        <th onClick={() => handleSort('employer')}>Employer  {sortField === 'employer' ? (sortDirection === 'desc' ? '↑' : '↓') : ''}</th>
+					)}
+					{user.username !== "61cb5560-a061-7010-fbb4-0a572b200dfc" && (
+                        <th>Employer</th>
+                    )}
+					
+                    {user.username === "61cb5560-a061-7010-fbb4-0a572b200dfc" && (
+                        <th onClick={() => handleSort('city')}>City  {sortField === 'city' ? (sortDirection === 'desc' ? '↑' : '↓') : ''}</th>
+					)}
+					{user.username !== "61cb5560-a061-7010-fbb4-0a572b200dfc" && (
+                        <th>City</th>
+                    )}
+                    <th>Email</th>
+                    <th>Phone Number</th>
+                    <th>Profile Picture</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -197,11 +231,13 @@ function Home({user}) {
 
 			{/* Button for redirecting to create page for
 				insertion of values */}
+			{!hasDataWithUserId && (
 			<Link className="d-grid gap-2" to="/create">
 				<Button variant="warning" size="lg">
 					Create
 				</Button>
 			</Link>
+			)}
 		</div>
 	);
 }

@@ -19,7 +19,8 @@ function App({ signOut, user }) {
 	return (
 		<div className="App">
 			{/* <h1>Hello {user.username}</h1> */}
-			<button onClick={signOut}>Sign out</button>
+		
+			<button onClick={signOut} style={{ marginTop: '10px' }}>Sign out</button>
 		
 			{/* <h1 style={{ marginTop: '25px' }} className="headline">All Users' Profiles </h1> */}
 			<Router>

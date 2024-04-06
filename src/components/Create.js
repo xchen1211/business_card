@@ -37,7 +37,7 @@ function Create({user}) {
 		e.preventDefault(); // Prevent reload
 
 		let uni = user.username
-		if (user.username == "61cb5560-a061-7010-fbb4-0a572b200dfc"){
+		if (user.username === "61cb5560-a061-7010-fbb4-0a572b200dfc"){
 			const ids = uuid(); // Creating unique id
 			uni = ids.slice(0, 8); // Slicing unique id
 		}
