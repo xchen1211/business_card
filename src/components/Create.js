@@ -69,11 +69,9 @@ function Create({user}) {
         };
 
         try {
-			console.log('pictureS3Key');
-			console.log(pictureS3Key);
-            // Make a PUT request to your Lambda function
+            // Make a PUT request to Lambda function
             const response = await axios.put('https://ozb6kyfiy4.execute-api.us-east-2.amazonaws.com/items', payload);
-            console.log(response.data); // Handle the response as needed
+            // console.log(response.data); // Handle the response as needed
         } catch (error) {
             console.error('Error submitting form:', error);
             // Handle errors as needed
@@ -249,26 +247,19 @@ function Create({user}) {
 						onChange={(e) =>
 							setphone(e.target.value)
 						}
-						type="text"
+						type="number"
 						placeholder="Phone number"
 						required
 					/>
 				</Form.Group>
 
-				{/* Fetching a value from input textfirld in
-					a setage using usestate*/}
-				{/* <Form.Group
-					className="mb-3"
-					controlId="formBasicAge"
-				> */}
+				{/* setting profile picture from the input */}
+	
 				<div>
 					<h2>Upload Profile Picture:</h2>
 					<input type="file" onChange={uploadimage} />
-					{/* width={"250px"} height={"250px"} */}
 					{picture && (<img src={picture} width={120} height={120} />)}
 				</div>
-				{/* </Form.Group> */}
-
 
 
 				{/* handing a onclick event in button for

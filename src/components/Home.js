@@ -22,15 +22,12 @@ function Home({user}) {
             	response = await axios.get('https://ozb6kyfiy4.execute-api.us-east-2.amazonaws.com/items/' + user.username);
 			}
 			setData(response.data); // Set the fetched data to state
-			console.log(response.data)
         } catch (error) {
             console.error('Error fetching data:', error);
             // Handle errors as needed
 		}
 	}
 
-	// You may skip this part if you're
-	// using react-context api or redux
 	function setID(username, name, age, birthday, job, employer, city, email, phone, picture) {
 		localStorage.setItem("id", username);
 		localStorage.setItem("name", name);
@@ -42,7 +39,6 @@ function Home({user}) {
         localStorage.setItem("email", email);
         localStorage.setItem("phone", phone);
 		localStorage.setItem("picture", picture);
-		// localStorage.setItem("picturePath", picturePath);
 	}
 
 	// Deleted function - functionality
@@ -60,9 +56,8 @@ function Home({user}) {
 		setData(newData);
 
         try {
-            // Make a PUT request to your Lambda function
+            // Make a PUT request to Lambda function
             const response = await axios.delete('https://ozb6kyfiy4.execute-api.us-east-2.amazonaws.com/items/'+id);
-            // console.log(response.data); // Handle the response as needed
         } catch (error) {
             console.error('Error submitting form:', error);
             // Handle errors as needed
@@ -84,8 +79,7 @@ function Home({user}) {
         }
         setSortField(field);
 		setSortDirection(direction);
-		
-		// field = field.toLowerCase();
+
 
         setData([...data].sort((a, b) => {
             // Compare the values of the specified field
@@ -108,7 +102,6 @@ function Home({user}) {
 	}, []);
 
 	data = data.flatMap(e => e)
-	// console.log(data)
 
 	// Check if the database already has data with id === user.username
     const hasDataWithUserId = data.some(item => item.id === user.username);
@@ -202,8 +195,7 @@ function Home({user}) {
 													item.email,
 													item.phone,
 													item.picture,
-													// item.picturePath
-											
+							
 												)
 											}
 											variant="info"
@@ -213,7 +205,7 @@ function Home({user}) {
 									</Link>
 								</td>
 
-								{/* Using thr deleted function passing
+								{/* Using the deleted function passing
 									the id of an entry */}
 								<td>
 									<Button

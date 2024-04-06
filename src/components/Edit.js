@@ -49,25 +49,10 @@ function Edit({user}) {
 			uni = ids.slice(0, 8); // Slicing unique id
 		}
 
-		// const ids = uuid(); // Creating unique id
-		// let uni = ids.slice(0, 8); // Slicing unique id
 		let pictureS3Key = uni + "_" + picturePath.name
-		// console.log(picturePath.name);
-		// console.log(pictureS3Key);
-		// console.log("picture");
-		// console.log(localStorage.getItem("picture"));
 		if (!picturePath.name) {
 			pictureS3Key = '0'
 		}
-
-		// let pictureS3Key;
-		// // Check if the user uploaded a new picture or not
-		// if (picturePath) {
-		// 	pictureS3Key = uni + "_" + picturePath.name;
-		// } else {
-		// 	// Use previous picture path from local storage
-		// 	pictureS3Key = localStorage.getItem("picture");
-		// }
 
 		// Form a payload with the data
         const payload = {
@@ -84,11 +69,8 @@ function Edit({user}) {
         };
 
         try {
-			console.log('pictureS3Key');
-			console.log(pictureS3Key);
-            // Make a PUT request to your Lambda function
+            // Make a PUT request to Lambda function
             const response = await axios.put('https://ozb6kyfiy4.execute-api.us-east-2.amazonaws.com/items', payload);
-            console.log(response.data); // Handle the response as needed
         } catch (error) {
             console.error('Error submitting form:', error);
             // Handle errors as needed
@@ -150,17 +132,7 @@ function Edit({user}) {
 		setage(localStorage.getItem("age"));
 		setid(localStorage.getItem("id"));
 
-		// // Retrieve previous picturePath from local storage
-		// setpicturePath(localStorage.getItem("picturePath"));
-
-		// // Check if picture is empty, if so, retrieve previous picture from local storage
-		// if (!picture) {
-		// 	setpicture(localStorage.getItem("picture"));
-		// }
-
 	}, []);
-
-	// data = data.flatMap(e => e)
 
 	return (
 		<div>
@@ -285,23 +257,18 @@ function Edit({user}) {
 						onChange={(e) =>
 							setphone(e.target.value)
 						}
-						type="text"
+						type="number"
 						placeholder="Phone number"
 					/>
 				</Form.Group>
 
-				{/* setting profile picture from the input textfiled */}
-				{/* <Form.Group
-					className="mb-3"
-					controlId="formBasicPassword"
-				> */}
+				{/* setting profile picture from the input */}
 					<div>
 					<h2>Upload Profile Picture:</h2>
 					<input type="file" onChange={uploadimage} />
-					{/* width={"250px"} height={"250px"} */}
 					{picture && (<img src={picture} width={120} height={120} />)}
 				</div>
-				{/* </Form.Group> */}
+	
 
 				{/* Handling an onclick event running an edit logic */}
 				<Button

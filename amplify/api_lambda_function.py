@@ -62,11 +62,21 @@ def lambda_handler(event, context):
             #     picture_key = upload_picture_to_s3(requestJSON['picture'])
             #     requestJSON['picture'] = picture_key
             
+            if requestJSON['picture'] == '0':
+                # If picture is '0', retrieve the current value from DynamoDB
+                existing_item = table.get_item(Key={'id': requestJSON['id']})
+                existing_picture = existing_item.get('Item', {}).get('picture', None)
+                if existing_picture:
+                    requestJSON['picture'] = existing_picture
+                
+           
             table.put_item(
                 Item={
                     'id': requestJSON['id'], 'name': requestJSON['name'], 'age': requestJSON['age'], 'birthday': requestJSON['birthday'], 'job': requestJSON['job'], 'employer': requestJSON['employer'], 
                     'city': requestJSON['city'], 'email': requestJSON['email'], 'phone': requestJSON['phone'], 'picture': requestJSON['picture']
                 })
+         
+                
             body = 'Put item ' + requestJSON['id']
     except KeyError:
         statusCode = 400
