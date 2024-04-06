@@ -41,7 +41,8 @@ function Home({user}) {
         localStorage.setItem("city", city);
         localStorage.setItem("email", email);
         localStorage.setItem("phone", phone);
-        localStorage.setItem("picture", picture);
+		localStorage.setItem("picture", picture);
+		// localStorage.setItem("picturePath", picturePath);
 	}
 
 	// Deleted function - functionality
@@ -200,7 +201,8 @@ function Home({user}) {
 													item.city,
 													item.email,
 													item.phone,
-													item.picture
+													item.picture,
+													// item.picturePath
 											
 												)
 											}

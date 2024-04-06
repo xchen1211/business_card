@@ -35,7 +35,7 @@ function Edit({user}) {
 
 	// Function for handling the edit and
 	// pushing changes of editing/updating
-	const handelSubmit = async (e) => {
+	const handleSubmit = async (e) => {
 		// Preventing from reload
 		e.preventDefault();
 		if (name == "" || age == "" || birthday == "" || job == "" || employer == "" || city == "" || email == "" || phone == "" || picture == "") {
@@ -51,8 +51,23 @@ function Edit({user}) {
 
 		// const ids = uuid(); // Creating unique id
 		// let uni = ids.slice(0, 8); // Slicing unique id
+		let pictureS3Key = uni + "_" + picturePath.name
+		// console.log(picturePath.name);
+		// console.log(pictureS3Key);
+		// console.log("picture");
+		// console.log(localStorage.getItem("picture"));
+		if (!picturePath.name) {
+			pictureS3Key = '0'
+		}
 
-		const pictureS3Key = uni + "_" + picturePath.name;
+		// let pictureS3Key;
+		// // Check if the user uploaded a new picture or not
+		// if (picturePath) {
+		// 	pictureS3Key = uni + "_" + picturePath.name;
+		// } else {
+		// 	// Use previous picture path from local storage
+		// 	pictureS3Key = localStorage.getItem("picture");
+		// }
 
 		// Form a payload with the data
         const payload = {
@@ -79,6 +94,7 @@ function Edit({user}) {
             // Handle errors as needed
 		}
 		
+		if (picturePath.name){
 		const S3_BUCKET = "business.picture";
 		const REGION = "us-east-2";
 		
@@ -111,6 +127,7 @@ function Edit({user}) {
 			console.log(err);
 			alert("File uploaded successfully.");
 		});
+	}
 		
 	
 
@@ -121,6 +138,7 @@ function Edit({user}) {
 	// Useeffect take care that page will
 	// be rendered only once
 	useEffect(() => {
+		// setpicturePath(localStorage.getItem("picturePath"));
 		setpicture(localStorage.getItem("picture"));
 		setphone(localStorage.getItem("phone"));
 		setemail(localStorage.getItem("email"));
@@ -131,6 +149,15 @@ function Edit({user}) {
 		setname(localStorage.getItem("name"));
 		setage(localStorage.getItem("age"));
 		setid(localStorage.getItem("id"));
+
+		// // Retrieve previous picturePath from local storage
+		// setpicturePath(localStorage.getItem("picturePath"));
+
+		// // Check if picture is empty, if so, retrieve previous picture from local storage
+		// if (!picture) {
+		// 	setpicture(localStorage.getItem("picture"));
+		// }
+
 	}, []);
 
 	// data = data.flatMap(e => e)
@@ -278,7 +305,7 @@ function Edit({user}) {
 
 				{/* Handling an onclick event running an edit logic */}
 				<Button
-					onClick={(e) => handelSubmit(e)}
+					onClick={(e) => handleSubmit(e)}
 					variant="primary"
 					type="submit"
 					size="lg"
