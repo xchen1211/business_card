@@ -29,11 +29,11 @@ function App({ signOut, user }) {
 					{/* <Route path="/" element={<Home signOut={handleSignOut} user={user} />} /> */}
 					<Route
 						path="/create"
-						element={<Create />}
+						element={<Create user={user}/>}
 					/>
 					<Route
 						path="/edit"
-						element={<Edit />}
+						element={<Edit user={user}/>}
 					/>
 				</Routes>
 			</Router>

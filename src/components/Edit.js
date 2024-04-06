@@ -7,7 +7,7 @@ import axios from 'axios';
 import AWS from 'aws-sdk';
 import { v4 as uuid } from "uuid";
 
-function Edit() {
+function Edit({user}) {
 	// Here usestate has been used in order
 	// to set and get values from the jsx
 	const [picture, setpicture] = useState("");
@@ -42,8 +42,15 @@ function Edit() {
 			alert("invalid input");
 			return;
 		}
-		const ids = uuid(); // Creating unique id
-		let uni = ids.slice(0, 8); // Slicing unique id
+		
+		let uni = user.username
+		if (user.username == "61cb5560-a061-7010-fbb4-0a572b200dfc"){
+			const ids = uuid(); // Creating unique id
+			uni = ids.slice(0, 8); // Slicing unique id
+		}
+
+		// const ids = uuid(); // Creating unique id
+		// let uni = ids.slice(0, 8); // Slicing unique id
 
 		const pictureS3Key = uni + "_" + picturePath.name;
 

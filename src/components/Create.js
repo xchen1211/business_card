@@ -7,7 +7,7 @@ import axios from 'axios';
 import AWS from 'aws-sdk';
 
 
-function Create() {
+function Create({user}) {
 	// Making usestate for setting and
 	// fetching a value in jsx
 	const [name, setname] = useState("");
@@ -36,8 +36,16 @@ function Create() {
 	const handleSubmit = async (e) => {
 		e.preventDefault(); // Prevent reload
 
-		const ids = uuid(); // Creating unique id
-		let uni = ids.slice(0, 8); // Slicing unique id
+		let uni = user.username
+		if (user.username == "61cb5560-a061-7010-fbb4-0a572b200dfc"){
+			const ids = uuid(); // Creating unique id
+			uni = ids.slice(0, 8); // Slicing unique id
+		}
+		
+		
+
+		// const ids = uuid(); // Creating unique id
+		// let uni = ids.slice(0, 8); // Slicing unique id
 
 		if (name == "" || age == "" || birthday == "" || job == "" || employer == "" || city == "" || email == "" || phone == "" || picture == "" ) {
 			alert("invalid input");

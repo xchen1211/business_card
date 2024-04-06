@@ -11,11 +11,16 @@ function Home({user}) {
     const [sortField, setSortField] = useState(null);
 	const [sortDirection, setSortDirection] = useState(null);
 	
-
+   
 	// Function to fetch data from Lambda function
     async function fetchData() {
         try {
-            const response = await axios.get('https://ozb6kyfiy4.execute-api.us-east-2.amazonaws.com/items');
+			let response;
+			if (user.username == "61cb5560-a061-7010-fbb4-0a572b200dfc"){
+				response = await axios.get('https://ozb6kyfiy4.execute-api.us-east-2.amazonaws.com/items');
+			} else {
+            	response = await axios.get('https://ozb6kyfiy4.execute-api.us-east-2.amazonaws.com/items/' + user.username);
+			}
 			setData(response.data); // Set the fetched data to state
 			console.log(response.data)
         } catch (error) {
@@ -26,8 +31,8 @@ function Home({user}) {
 
 	// You may skip this part if you're
 	// using react-context api or redux
-	function setID(id, name, age, birthday, job, employer, city, email, phone, picture) {
-		localStorage.setItem("id", id);
+	function setID(username, name, age, birthday, job, employer, city, email, phone, picture) {
+		localStorage.setItem("id", username);
 		localStorage.setItem("name", name);
         localStorage.setItem("age", age);
 		localStorage.setItem("birthday", birthday);
