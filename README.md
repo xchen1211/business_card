@@ -10,14 +10,14 @@ This is a simple business card online application. A user can create his own bus
 ## Tech stack:
 React.js, Amazon AWS Lambda, Python Boto3, DynamoDB, Cognito, Amplify, S3.
 
-The front end used React.js and the app is host on Amazon AWS. S3 was set up for profile picture upload, and Amplify and Cognito are used for users' sign up/sign in/sign out. 
+The front end used React.js and the app is host on Amazon AWS. S3 was set up for profile picture upload, and Amplify and Cognito are used for authentication and user management.
 
 
 
-
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
+
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 In the project directory, you can run:
 
