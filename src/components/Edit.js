@@ -82,8 +82,8 @@ function Edit({user}) {
 		
 		//TODO: save to another place
 		AWS.config.update({
-			accessKeyId: "AKIATCKAOO5F4YUF4ITX",
-			secretAccessKey: "hn6Za6O0jtZ9QaEs8BaZGe2rWqZdgkkaBufZW0Cl",
+			accessKeyId: "enter your own accessKeyId",
+			secretAccessKey: "enter your own secretAccessKey",
 		});
 		const s3 = new AWS.S3({
 			params: { Bucket: S3_BUCKET },
