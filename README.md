@@ -5,7 +5,7 @@ Please note you may not be able to run the code directly because I have removed 
 To see how the app works, check the demo here: https://youtu.be/mEs2sWRAzeQ
 
 ## Description:
-This is a simple business card online application. A user can create his own business card in his account. He can create/read/update/delete his information, including name, age, birthday, job title, employer, city, email, phone number, and profile picture. There is also an admin of the application. As the admin, if he logs into the admin account, he can create/read/update/delete all users' information. He can see a table of all users' information, which can be sorted by age, job title, employer, or city. All the users can sign up/sign in/sign out.
+This is a business card online application. A user can create his own business card in his account. He can create/read/update/delete his information, including name, age, birthday, job title, employer, city, email, phone number, and profile picture. There is also an admin of the application. As the admin, if he logs into the admin account, he can create/read/update/delete all users' information. He can see a table of all users' information, which can be sorted by age, job title, employer, or city. All the users can sign up/sign in/sign out.
 
 ## Tech stack:
 React.js, Amazon AWS Lambda, Python Boto3, DynamoDB, Cognito, Amplify, S3.
